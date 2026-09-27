@@ -122,12 +122,10 @@ function WorkoutBody({ state, workout }: { state: AppState; workout: W }) {
       return (
         <Section title="Session">
           <div class="step">
-            <span class="step-amount">{a === b ? a : `${a}–${b}`}</span>
+            <span class="step-amount">{a === b ? a : `${a}–${b}`} min</span>
             <span>
-              <span class="step-action">Minutes, easy</span>
-              <span class="step-note">
-                {workout.options.map((o) => kindLabel[o]).join(' or ')} — your choice. Guidance, not a target: anywhere in this range counts.
-              </span>
+              <span class="step-action">{workout.options.map((o, i) => (i ? kindLabel[o].toLowerCase() : kindLabel[o])).join(' or ')} at an easy, steady effort</span>
+              <span class="step-note">The time is guidance, not a target — anywhere in the range counts.</span>
             </span>
           </div>
         </Section>
@@ -141,7 +139,7 @@ function Step({ step }: { step: RunStep }) {
     <div class={`step ${step.action}`}>
       <span class="step-amount">{step.km !== undefined ? `${step.km} km` : `${step.min} min`}</span>
       <span>
-        <span class="step-action">{step.action}</span>
+        <span class="step-action">{step.action === 'run' ? 'Run' : 'Walk'}</span>
         {step.note && <span class="step-note">{step.note}</span>}
       </span>
     </div>

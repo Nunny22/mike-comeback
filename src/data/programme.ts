@@ -55,11 +55,7 @@ const BIKE_OR_HIKE = (min: number, max: number, tips: string[] = []): EnduranceW
   title: 'Long easy session',
   minutes: [min, max],
   options: ['bike', 'hike'],
-  tips: [
-    'The time range is guidance, not a target — anywhere in it counts.',
-    'Steady, easy effort — you should finish wanting more.',
-    ...tips,
-  ],
+  tips: ['You should finish wanting more.', ...tips],
 });
 
 export const programme: Programme = {
