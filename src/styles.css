@@ -1021,3 +1021,8 @@ textarea.input {
 .row-sub {
   display: block;
 }
+
+.step-action,
+.step-note {
+  display: block;
+}
