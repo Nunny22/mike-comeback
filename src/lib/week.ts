@@ -95,7 +95,7 @@ export function workoutSummary(w: Workout): string {
       return `${w.exercises.length} exercises · full body`;
     case 'endurance': {
       const [a, b] = w.minutes;
-      return `${a === b ? a : `${a}–${b}`} min easy`;
+      return `${a === b ? a : `${a}–${b}`} min easy (guide)`;
     }
   }
 }
@@ -110,8 +110,14 @@ export function workoutLength(w: Workout): string | undefined {
     case 'weights':
       return '~50 min';
     case 'endurance':
-      return `${w.minutes[0]}–${w.minutes[1]} min`;
+      return `Guide: ${w.minutes[0]}–${w.minutes[1]} min`;
   }
+}
+
+/** "Bike or Hike · Long easy session", or just one of them if they say the same thing. */
+export function sessionName(slot: SlotId, w: Workout): { label: string | null; title: string } {
+  const label = slotDef(slot).label;
+  return { label: label.toLowerCase() === w.title.trim().toLowerCase() ? null : label, title: w.title };
 }
 
 export { isRepeat };

@@ -125,7 +125,9 @@ function WorkoutBody({ state, workout }: { state: AppState; workout: W }) {
             <span class="step-amount">{a === b ? a : `${a}–${b}`}</span>
             <span>
               <span class="step-action">Minutes, easy</span>
-              <span class="step-note">{workout.options.map((o) => kindLabel[o]).join(' or ')} — your choice</span>
+              <span class="step-note">
+                {workout.options.map((o) => kindLabel[o]).join(' or ')} — your choice. Guidance, not a target: anywhere in this range counts.
+              </span>
             </span>
           </div>
         </Section>

@@ -1,7 +1,7 @@
 import type { SlotId, Workout, WorkoutLog } from '../data/types.ts';
 import { formatDay } from '../lib/dates.ts';
 import { kindLabel } from '../lib/logs.ts';
-import { slotDef, workoutLength } from '../lib/week.ts';
+import { sessionName, workoutLength } from '../lib/week.ts';
 import { Icon } from './Icon.tsx';
 
 interface Props {
@@ -14,7 +14,9 @@ interface Props {
 
 export function SessionCard({ week, slot, workout, log, isNext }: Props) {
   const done = Boolean(log);
-  const label = done && slot === 'endurance' && log ? kindLabel[log.kind] : slotDef(slot).label;
+  const name = sessionName(slot, workout);
+  // Once a bike/hike is logged, say which one it was.
+  const label = done && slot === 'endurance' && log ? kindLabel[log.kind] : name.label;
   const meta = done && log ? `Done ${formatDay(log.date)}` : workoutLength(workout);
 
   return (
@@ -26,7 +28,7 @@ export function SessionCard({ week, slot, workout, log, isNext }: Props) {
         <Icon name={done ? 'check' : slot} size={26} />
       </span>
       <span>
-        <span class="card-label">{label}</span>
+        {label && <span class="card-label">{label}</span>}
         <span class="card-title">{workout.title}</span>
         {meta && <span class="card-meta num">{meta}</span>}
       </span>

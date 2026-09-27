@@ -3,7 +3,7 @@ import type { AppState } from '../data/types.ts';
 import { programme } from '../data/programme.ts';
 import { Icon } from '../components/Icon.tsx';
 import { formatShortDate, todayISO } from '../lib/dates.ts';
-import { bonusLogs, currentWeek, getWorkout, isEdited, slotDef, slotIds, slotLog, weekDates, weekSummary, workoutSummary } from '../lib/week.ts';
+import { bonusLogs, currentWeek, getWorkout, isEdited, sessionName, slotIds, slotLog, weekDates, weekSummary, workoutSummary } from '../lib/week.ts';
 
 export function Plan({ state }: { state: AppState }) {
   const now = currentWeek(state.settings.startDate, todayISO());
@@ -50,6 +50,7 @@ export function Plan({ state }: { state: AppState }) {
                 {slotIds().map((slot) => {
                   const workout = getWorkout(state, week, slot);
                   const done = slotLog(state.logs, week, slot);
+                  const name = sessionName(slot, workout);
                   return (
                     <a key={slot} class="row" href={`#/workout/${week}/${slot}`}>
                       <span class="row-icon" style={`background:var(--${slot}-soft);color:var(--${slot})`}>
@@ -57,7 +58,7 @@ export function Plan({ state }: { state: AppState }) {
                       </span>
                       <span class="row-main">
                         <span class="row-title">
-                          {slotDef(slot).label} · {workout.title}
+                          {name.label ? `${name.label} · ${name.title}` : name.title}
                           {isEdited(state, week, slot) ? ' (edited)' : ''}
                         </span>
                         <span class="row-sub">{workoutSummary(workout)}</span>

@@ -5,7 +5,7 @@ import { Section } from '../components/Screen.tsx';
 import { SessionCard } from '../components/SessionCard.tsx';
 import { formatDay, formatShortDate, todayISO } from '../lib/dates.ts';
 import { kindLabel, logSummary } from '../lib/logs.ts';
-import { bonusLogs, currentWeek, getWorkout, rawWeekFor, slotDef, slotIds, slotLog, weekCount, weekDates, weekSummary } from '../lib/week.ts';
+import { bonusLogs, currentWeek, getWorkout, rawWeekFor, slotIds, slotLog, weekCount, weekDates, weekSummary } from '../lib/week.ts';
 
 export function Today({ state }: { state: AppState }) {
   const today = todayISO();
@@ -15,7 +15,6 @@ export function Today({ state }: { state: AppState }) {
   const summary = weekSummary(state, week);
   const { from, to } = weekDates(start, week);
   const bonus = bonusLogs(state, week);
-  const plan = programme.weeks[week - 1];
 
   return (
     <>
@@ -41,7 +40,7 @@ export function Today({ state }: { state: AppState }) {
         <p class="hero-next">
           {summary.complete
             ? 'Week done. Anything else is a bonus.'
-            : `Next up: ${slotDef(summary.next!).label.toLowerCase()} — ${plan.focus.toLowerCase()}.`}
+            : `Next: ${getWorkout(state, week, summary.next!).title}`}
         </p>
       </header>
 
