@@ -1,3 +1,5 @@
 import { render } from 'preact';
+import { App } from './app.tsx';
+import './styles.css';
 
-render(<p>Mike Comeback</p>, document.getElementById('app')!);
+render(<App />, document.getElementById('app')!);
