@@ -7,6 +7,7 @@ import { slotIds, weekCount } from './lib/week.ts';
 import { EditWorkout } from './screens/EditWorkout.tsx';
 import { LogWorkout } from './screens/LogWorkout.tsx';
 import { Plan } from './screens/Plan.tsx';
+import { Progress } from './screens/Progress.tsx';
 import { Today } from './screens/Today.tsx';
 import { Workout } from './screens/Workout.tsx';
 
@@ -31,11 +32,13 @@ export function App() {
   const ws = weekSlot(params);
 
   // Routes:
-  //   #/today  #/plan              #/workout/:week/:slot[/edit]
+  //   #/today  #/plan  #/progress            #/workout/:week/:slot[/edit]
   //   #/log/:week/:slot            #/log/bonus[/:id]
   let screen: ComponentChildren = null;
   let tab = page;
-  if (page === 'plan') {
+  if (page === 'progress') {
+    screen = <Progress state={state} />;
+  } else if (page === 'plan') {
     screen = <Plan state={state} />;
   } else if (page === 'workout' && ws && params[2] === 'edit') {
     tab = 'today';
