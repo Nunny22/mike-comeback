@@ -73,6 +73,8 @@ export interface SlotDef {
 
 export interface Programme {
   name: string;
+  /** YYYY-MM-DD — default Monday of week 1 on a fresh install (changeable in Settings). */
+  startDate: string;
   /** Planned sessions per week that count as a successful week. */
   target: number;
   slots: SlotDef[];

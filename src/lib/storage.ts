@@ -3,7 +3,7 @@
 // it in store.ts. Records already carry ids and timestamps for merging.
 
 import type { AppState } from '../data/types.ts';
-import { mondayOf, todayISO } from './dates.ts';
+import { programme } from '../data/programme.ts';
 
 export interface StorageAdapter {
   load(): AppState | null;
@@ -15,7 +15,7 @@ const KEY = 'mike-comeback:v1';
 export function emptyState(): AppState {
   return {
     version: 1,
-    settings: { startDate: mondayOf(todayISO()) },
+    settings: { startDate: programme.startDate },
     logs: [],
     body: [],
     overrides: {},

@@ -82,3 +82,35 @@ test('normalise tolerates junk and partial backups', () => {
   assert.equal(n.logs.length, 1);
   assert.deepEqual(n.overrides, {});
 });
+
+test('fresh install starts week 1 on Monday 28 September 2026', () => {
+  const s = emptyState();
+  assert.equal(s.settings.startDate, '2026-09-28');
+  assert.equal(mondayOf(s.settings.startDate), '2026-09-28');
+  assert.equal(rawWeekFor(s.settings.startDate, '2026-09-27'), 0); // day before: not started
+  assert.equal(currentWeek(s.settings.startDate, '2026-10-04'), 1);
+});
+
+test('bike/hike guidance ranges', () => {
+  const s = emptyState();
+  const ranges = [1, 2, 3, 4, 5, 6].map((w) => {
+    const e = getWorkout(s, w, 'endurance');
+    return e.kind === 'endurance' ? e.minutes.join('–') : '';
+  });
+  assert.deepEqual(ranges, ['60–75', '60–75', '60–90', '60–90', '60–120', '60–120']);
+  assert.equal(workoutSummary(getWorkout(s, 5, 'endurance')), '60–120 min easy (guide)');
+});
+
+test('an in-app edit never alters the base programme', async () => {
+  const { programme } = await import('../data/programme.ts');
+  const before = JSON.stringify(programme);
+  const s = emptyState();
+  const edited = structuredClone(getWorkout(s, 2, 'weights'));
+  if (edited.kind === 'weights') edited.exercises[0].sets = 5;
+  s.overrides[2] = { weights: edited };
+  const w2 = getWorkout(s, 2, 'weights');
+  const w3 = getWorkout(s, 3, 'weights');
+  assert.equal(w2.kind === 'weights' && w2.exercises[0].sets, 5);
+  assert.equal(w3.kind === 'weights' && w3.exercises[0].sets, 3);
+  assert.equal(JSON.stringify(programme), before);
+});

@@ -3,6 +3,7 @@
 // ============================================================
 //
 //  - Add/remove a week: add/remove an entry in `weeks`.
+//  - Change when week 1 starts: edit startDate (a Monday, YYYY-MM-DD).
 //  - Change the weights session everywhere: edit FULL_BODY below.
 //  - Change one week only: edit that week's entry.
 //  - Runs are a list of steps. Wrap steps in repeat(n, [...]) for intervals.
@@ -48,16 +49,22 @@ const FULL_BODY = (tips: string[] = []): WeightsWorkout => ({
   ],
 });
 
+// Minutes are guidance, not a target: anything in the range counts.
 const BIKE_OR_HIKE = (min: number, max: number, tips: string[] = []): EnduranceWorkout => ({
   kind: 'endurance',
-  title: 'Bike or hike',
+  title: 'Long easy session',
   minutes: [min, max],
   options: ['bike', 'hike'],
-  tips: ['Steady, easy effort — you should finish wanting more.', ...tips],
+  tips: [
+    'The time range is guidance, not a target — anywhere in it counts.',
+    'Steady, easy effort — you should finish wanting more.',
+    ...tips,
+  ],
 });
 
 export const programme: Programme = {
   name: '6-week comeback',
+  startDate: '2026-09-28',
   target: 3,
   slots: [
     { id: 'run', label: 'Run', short: 'Run' },
@@ -70,7 +77,7 @@ export const programme: Programme = {
       sessions: {
         run: {
           kind: 'run',
-          title: 'Run/walk intervals',
+          title: 'Easy comeback run',
           items: [walk(5, 'Brisk warm-up walk'), repeat(4, [run(4, 'Easy'), walk(1)])],
           tips: RUN_TIPS,
         },
@@ -101,7 +108,7 @@ export const programme: Programme = {
           tips: RUN_TIPS,
         },
         weights: FULL_BODY(['If every set felt easy last week, add a small amount of weight.']),
-        endurance: BIKE_OR_HIKE(70, 80),
+        endurance: BIKE_OR_HIKE(60, 90),
       },
     },
     {
@@ -114,7 +121,7 @@ export const programme: Programme = {
           tips: ['Start slower than feels necessary.', ...RUN_TIPS],
         },
         weights: FULL_BODY(),
-        endurance: BIKE_OR_HIKE(75, 85),
+        endurance: BIKE_OR_HIKE(60, 90),
       },
     },
     {
@@ -127,7 +134,7 @@ export const programme: Programme = {
           tips: RUN_TIPS,
         },
         weights: FULL_BODY(),
-        endurance: BIKE_OR_HIKE(75, 90),
+        endurance: BIKE_OR_HIKE(60, 120),
       },
     },
     {
@@ -140,7 +147,7 @@ export const programme: Programme = {
           tips: ['Note your time and average HR. That is your new baseline.'],
         },
         weights: FULL_BODY(),
-        endurance: BIKE_OR_HIKE(80, 90, ['Your longest one yet — take water and a snack.']),
+        endurance: BIKE_OR_HIKE(60, 120, ['If you go long, take water and a snack.']),
       },
     },
   ],
