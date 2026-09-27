@@ -54,10 +54,12 @@ export function Settings({ state }: { state: AppState }) {
       <Section title="Programme">
         <div class="panel form">
           <p class="muted small">
-            {programme.name} · {programme.target} sessions a week. Week 1 started {formatDay(state.settings.startDate)}.
+            {programme.name} · {programme.target} sessions a week. Week 1 {state.settings.startDate > today ? 'starts' : 'started'} {formatDay(state.settings.startDate)}.
           </p>
           <Field label="This week is…" hint="Missed some time? Move to whichever week fits. No penalty — your logs stay put.">
-            <Segmented class="segmented rpe" options={weeks} value={week} onChange={jumpTo} label={(w) => `W${w}`} />
+            <div style={`--weeks:${weeks.length}`}>
+              <Segmented class="week-picker" options={weeks} value={week} onChange={jumpTo} label={(w) => `W${w}`} />
+            </div>
           </Field>
           <Field label="Week 1 start date">
             <input
