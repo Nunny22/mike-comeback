@@ -33,8 +33,9 @@ export function App() {
   const ws = weekSlot(params);
 
   // Routes:
-  //   #/today  #/plan  #/progress  #/settings            #/workout/:week/:slot[/edit]
-  //   #/log/:week/:slot            #/log/bonus[/:id]
+  //   #/today  #/plan  #/progress  #/settings
+  //   #/workout/:week/:slot[/edit]
+  //   #/log/:week/:slot  #/log/bonus[/:id]
   let screen: ComponentChildren = null;
   let tab = page;
   if (page === 'settings') {
