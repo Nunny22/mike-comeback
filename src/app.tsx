@@ -8,6 +8,7 @@ import { EditWorkout } from './screens/EditWorkout.tsx';
 import { LogWorkout } from './screens/LogWorkout.tsx';
 import { Plan } from './screens/Plan.tsx';
 import { Progress } from './screens/Progress.tsx';
+import { Settings } from './screens/Settings.tsx';
 import { Today } from './screens/Today.tsx';
 import { Workout } from './screens/Workout.tsx';
 
@@ -32,11 +33,13 @@ export function App() {
   const ws = weekSlot(params);
 
   // Routes:
-  //   #/today  #/plan  #/progress            #/workout/:week/:slot[/edit]
+  //   #/today  #/plan  #/progress  #/settings            #/workout/:week/:slot[/edit]
   //   #/log/:week/:slot            #/log/bonus[/:id]
   let screen: ComponentChildren = null;
   let tab = page;
-  if (page === 'progress') {
+  if (page === 'settings') {
+    screen = <Settings state={state} />;
+  } else if (page === 'progress') {
     screen = <Progress state={state} />;
   } else if (page === 'plan') {
     screen = <Plan state={state} />;
