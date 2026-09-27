@@ -4,6 +4,7 @@ import { Icon, type IconName } from './components/Icon.tsx';
 import { useRoute } from './router.ts';
 import { useAppState } from './lib/store.ts';
 import { slotIds, weekCount } from './lib/week.ts';
+import { EditWorkout } from './screens/EditWorkout.tsx';
 import { LogWorkout } from './screens/LogWorkout.tsx';
 import { Today } from './screens/Today.tsx';
 import { Workout } from './screens/Workout.tsx';
@@ -29,11 +30,14 @@ export function App() {
   const ws = weekSlot(params);
 
   // Routes:
-  //   #/today                      #/workout/:week/:slot
+  //   #/today                      #/workout/:week/:slot[/edit]
   //   #/log/:week/:slot            #/log/bonus[/:id]
   let screen: ComponentChildren = null;
   let tab = page;
-  if (page === 'workout' && ws) {
+  if (page === 'workout' && ws && params[2] === 'edit') {
+    tab = 'today';
+    screen = <EditWorkout key={`${ws.week}-${ws.slot}`} state={state} {...ws} />;
+  } else if (page === 'workout' && ws) {
     tab = 'today';
     screen = <Workout state={state} {...ws} />;
   } else if (page === 'log' && params[0] === 'bonus') {
